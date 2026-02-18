@@ -1,36 +1,123 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Smart Bookmark App
 
-## Getting Started
+This is a simple bookmark manager built using Next.js, Supabase, and Tailwind CSS.  
+Users can log in with Google, add bookmarks, delete them, and see updates in real time.
 
-First, run the development server:
+## Live Demo
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+https://bookmark-manager-aastha.vercel.app/
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## GitHub Repo
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+https://github.com/Aastharao1610/bookmarkmanager
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- Next.js (App Router)
+- Supabase (Authentication, Database, Realtime)
+- Tailwind CSS
+- Vercel (Deployment)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Features
 
-## Deploy on Vercel
+- Google OAuth login (no email/password)
+- Add bookmark (title + URL)
+- Delete bookmark
+- Bookmarks are private per user
+- Real-time updates across tabs
+- Search bookmarks
+- Favicon preview for bookmarks
+- Duplicate bookmark prevention
+- Responsive design
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## How it works
+
+After logging in with Google, each user can manage their own bookmarks.  
+Bookmarks are stored in Supabase and linked to the logged-in user's ID.
+
+Supabase Row Level Security ensures users can only access their own bookmarks.
+
+Realtime subscriptions are used so that changes appear instantly without refreshing the page.
+
+---
+
+## Database Structure
+
+Table: `bookmarks`
+
+Columns:
+
+- id (uuid, primary key)
+- title (text)
+- url (text)
+- user_id (uuid)
+- created_at (timestamp)
+
+Row Level Security is enabled to protect user data.
+
+---
+
+## Challenges I faced and how I solved them
+
+### 1. Authentication redirect and middleware issue
+
+After implementing Google login, the user was not redirecting properly to the dashboard. The problem was related to handling the auth callback and cookies correctly in Next.js App Router.
+
+I solved this by creating a proper `/auth/callback` route and using:
+
+
+This allowed Supabase to correctly create the session and redirect the user.
+
+---
+
+### 2. Realtime updates were not working initially
+
+When I added a bookmark in one tab, it was not appearing in another tab.
+
+I fixed this by using Supabase realtime subscriptions:
+
+
+and filtering updates using the logged-in user's ID.
+
+I also handled cleanup to prevent duplicate subscriptions.
+
+After this, updates started working instantly across tabs.
+
+---
+
+
+## What I focused on while building this
+
+My main focus was:
+
+- Correct authentication flow
+- Keeping bookmarks private per user
+- Implementing real-time updates properly
+- Writing clean and maintainable code
+- Creating a simple and clean UI
+- Proper deployment setup
+
+---
+
+## Future Improvements
+
+Some improvements that could be added:
+
+- Folder/category support
+- Edit bookmark feature
+- Drag and drop organization
+- Better mobile UI improvements
+
+---
+
+## Author
+
+Aastha Rao
+
+
