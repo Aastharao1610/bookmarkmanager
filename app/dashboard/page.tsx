@@ -10,12 +10,31 @@ import { useBookmarks } from "../hooks/useBookmarks";
 
 function normalizeUrl(url: string) {
   try {
+    url = url.trim();
+
+    if (!url) return "";
+
+    if (!/^https?:\/\//i.test(url)) {
+      url = `https://${url}`;
+    }
+
     const normalized = new URL(url);
+
     return normalized.href.replace(/\/$/, "").toLowerCase();
   } catch {
-    return url.toLowerCase();
+    return "";
   }
 }
+
+function getDisplayUrl(url: string) {
+  try {
+    const hostname = new URL(url).hostname;
+    return hostname.replace(/^www\./, "");
+  } catch {
+    return url;
+  }
+}
+
 export default function Dashboard() {
   const [user, setUser] = useState<User | null>(null);
   const [title, setTitle] = useState("");
@@ -209,7 +228,7 @@ export default function Dashboard() {
                       rel="noopener noreferrer"
                       className="text-sm text-slate-500 hover:text-black transition"
                     >
-                      {bookmark.url}
+                      {getDisplayUrl(bookmark.url)}
                     </a>
                     <button
                       onClick={() => window.open(bookmark.url, "_blank")}
