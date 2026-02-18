@@ -9,6 +9,7 @@ export function useBookmarks(user: User | null) {
    const [bookmarks, setBookmarks] = useState<any[]>([]);
    const [loading, setLoading] = useState(false);
 
+
    useEffect(() => {
       if (!user) return;
 
@@ -55,6 +56,8 @@ export function useBookmarks(user: User | null) {
       };
    }, [user]);
 
+   //ading bookmark logic
+
    const addBookmark = async (title: string, url: string) => {
       setLoading(true);
 
@@ -86,6 +89,7 @@ export function useBookmarks(user: User | null) {
       });
    };
 
+   // deleting bookmark logic
    const deleteBookmark = async (id: string) => {
       const toastId = toast.loading("Deleting...");
 
