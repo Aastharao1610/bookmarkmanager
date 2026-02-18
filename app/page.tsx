@@ -1,25 +1,28 @@
 "use client";
-
-import { supabase } from "./lib/supabseClient";
+import { supabaseBrowser } from "./lib/supabseBrowserClinet";
 
 export default function LoginPage() {
   const handleGoogleLogin = async () => {
-    await supabase.auth.signInWithOAuth({
+    await supabaseBrowser.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "http://localhost:3000/dashboard",
+        redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`
+
+
       },
     });
   };
 
   return (
     <div className="min-h-screen flex">
-      <div className="hidden md:flex w-1/2 bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white p-16 flex-col justify-between ">
-        <div className="my-56">
+      <div className="hidden md:flex w-1/2 bg-linear-to-br from-black via-gray-900 to-gray-800 text-white p-16 flex-col justify-between ">
+        {/* <div className="flex w-full lg:w-1/2 min-h-[35vh] lg:min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white p-10 lg:p-16 flex-col justify-between"> */}
+
+        <div className="my-72">
           <h1 className="text-4xl font-bold tracking-tight">
             Bookmark Manager
           </h1>
-          <p className="mt-6 text-gray-300 text-lg leading-relaxed">
+          <p className="mt-6 text-gray-300 text-lg w-[550px] leading-relaxed">
             Organize your digital world. Save links. Access anywhere. Built for
             speed and simplicity.
           </p>

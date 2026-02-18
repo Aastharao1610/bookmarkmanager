@@ -1,7 +1,7 @@
 "use client";
 
 import { User } from "@supabase/supabase-js";
-import { supabase } from "@/app/lib/supabseClient";
+import { supabaseBrowser } from "@/app/lib/supabseBrowserClinet";
 import { useState, useRef, useEffect } from "react";
 
 type HeaderProps = {
@@ -13,7 +13,7 @@ const Header = ({ user }: HeaderProps) => {
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    await supabaseBrowser.auth.signOut();
     window.location.href = "/";
   };
 
